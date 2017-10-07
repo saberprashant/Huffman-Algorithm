@@ -30,9 +30,7 @@ public:
 
 
 
-//shorter method and don't need any other functions like
-//printArr() and isLeaf()
-
+// for printing the codes
 void printCodes(HuffmanNode* root, string str, map<char, string> & secretCodes)
 {
     if (!root)
@@ -68,12 +66,6 @@ int main(){
     input.close();
 
 
-    /* get the frequency count of each letter */
-    //for(char c : text)   // new way of filling a map
-      //  letter_count[c]++;
-    /*for(int i=0; i<strlen(text); i++)   // OLD WAY
-        letter_count[input[i] = letter_count[input[i] + 1;*/
-
     /* put the character count into the huffman priority queue*/
     for(auto entry : letter_count) {
         HuffmanNode* n = new HuffmanNode(entry.first, entry.second);
@@ -83,7 +75,7 @@ int main(){
     /* build the tree */
     HuffmanNode* combined = nullptr;
     while(huffman_table.size() != 1) {
-        /* pull the two lowest */
+        /* getting the two nodes having lowest count */
         HuffmanNode *low1 = huffman_table.top();
         huffman_table.pop();
 
@@ -97,14 +89,14 @@ int main(){
     }
     HuffmanNode* root = combined;
 
-    // Print Huffman codes using the Huffman tree built above
+    // calling the printCodes
     printCodes(root, "", secretCodes);     // for easier method
 
     cout<<endl<<endl<<endl;         // testing
     cout<<secretCodes['a']<<endl;
     cout<<secretCodes['p'];
 
-    ifstream input_again("input.txt");
+    ifstream input_again("input.txt");   // for encryption of data to output.txt
     ofstream output;
     output.open("output.txt");
     char x;
@@ -112,7 +104,7 @@ int main(){
     while(input_again.get(x))
     {
         str = secretCodes[x];
-        output << str;
+        output << str;              //writing the encryption data to output.txt
     }
     input_again.close();
     output.close();
